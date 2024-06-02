@@ -1,0 +1,38 @@
+#!/bin/sh
+
+if [ $(id -u) = 0 ]; then
+	printf "$(basename $0): do not run as root.\n"
+	exit 1
+fi
+
+if [ $(id -u) != 0 ]; then
+	if [ -f /usr/bin/sudo ]; then
+		sudo=1
+	fi
+fi
+
+this_dir=$(dirname $(realpath $0))
+bin_path=/usr/bin
+var_path=/var
+src_file=$this_dir/$(basename $this_dir).sh
+program_name=$(basename $this_dir)
+
+#src_file=$this_dir/box.sh
+#program_name="box"
+
+if [ $(uname -o) != "GNU/Linux" ]; then
+	bin_path=$PREFIX/bin
+	var_path=$PREFIX/var
+fi
+
+if [ -f $bin_path/$program_name ]; then
+	if [ ! -z $sudo ]; then
+		sudo rm -r $bin_path/$program_name
+		sudo rm -r $var_path/lib/$program_name
+	else
+		rm -r $bin_path/$program_name
+		rm -r $var_path/lib/$program_name	
+	fi
+fi
+
+printf "uninstall: done.\n"
