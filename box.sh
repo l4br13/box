@@ -46,7 +46,7 @@ if [ -z $EVAL ]; then
 	fi
 	eval set -- $OPT
 	while true; do
-		if [ "$1" == "--" ]; then
+		if [ "$1" = "--" ]; then
 			shift
 			PARAM=$@
 			break
