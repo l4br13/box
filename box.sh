@@ -222,8 +222,8 @@ INSTALL () {
 		printf "alpine" > $ROOT/etc/hostname
 		echo "PS1='\W \\$ ' " >> $ROOT/etc/profile
 		echo 'cd $HOME' >> $ROOT/etc/profile
-		EXEC "apk update"
-		EXEC "apk upgrade"
+		#EXEC "apk update"
+		#EXEC "apk upgrade"
 		printf "$PROGRAM: install complete.\n"
 	fi
 }
