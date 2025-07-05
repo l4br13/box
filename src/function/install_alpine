@@ -29,7 +29,7 @@ INSTALL_ALPINE () {
     ROOTFS_FILE=$DIR/$ROOTFS
     
     if [ ! -f $DIR/$ROOTFS ]; then
-        curl --progress-bar -L --fail --retry 4 $URL_ROOTFS -o $ROOTFS_FILE || {
+        curl -s --progress-bar -L --fail --retry 4 $URL_ROOTFS -o $ROOTFS_FILE || {
             printf "install: error: failed to download file.\n"
             printf "installation aborted.\n"
             exit 1

@@ -1,0 +1,8 @@
+SPINNER () {
+    while true; do
+        for i in / - \\ \|; do
+            printf "\r$i"
+            sleep 0.1
+        done
+    done
+}

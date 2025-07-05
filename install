@@ -3,6 +3,7 @@
 PROGRAM=$(basename $0)
 THIS=$(dirname $(realpath $0))
 SOURCE=$THIS/src
+BINDIR=/usr/bin
 
 if [ $(uname -o) = "Android" ]; then
 	if [ $(id -u) = 0 ]; then
@@ -10,22 +11,15 @@ if [ $(uname -o) = "Android" ]; then
 		exit 1
 	fi
 	BINDIR=$PREFIX/bin
-else
-	if [ $(id -u) != 0 ]; then
-        printf "$PROGRAM: must be superuser to run command.\n"
-        exit 1
-    fi
-	BINDIR=/usr/bin
 fi
 
-FILEOUT=$BINDIR/box
+FILEOUT=$THIS/box.sh
 
 fwrite () {
 	file_in=$(realpath $1)
 	if [ -f $file_in ]; then
-		printf "\n" >> $FILEOUT
 		cat $file_in >> $FILEOUT
-		printf "\n" >> $FILEOUT
+		printf "\n\n" >> $FILEOUT
 	fi
 }
 
@@ -33,13 +27,19 @@ echo "#!/bin/sh" > $FILEOUT
 echo "# $(date)" >> $FILEOUT
 printf "\n" >> $FILEOUT
 
-fwrite $SOURCE/init.sh
+fwrite $SOURCE/init
 
 for i in $SOURCE/function/*
 do
 	fwrite $i
 done
 
-fwrite $SOURCE/main.sh
+fwrite $SOURCE/main
 
 chmod +x $FILEOUT
+
+if [ $(id -u) != 0 ]; then
+	sudo cp $FILEOUT $BINDIR/box
+else
+	cp $FILEOUT $BINDIR/box
+fi

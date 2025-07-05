@@ -3,16 +3,16 @@ INSTALL_UBUNTU () {
     URL=https://cdimage.ubuntu.com
     REL=noble
     REL_VER=24.04.1
-    REL_URL=$URL/ubuntu-base/releases/$REL/release
+    #REL_URL=$URL/ubuntu-base/releases/$REL/release
 
-    #REL_URL=$URL/ubuntu-base/$REL/daily/current
+    REL_URL=$URL/ubuntu-base/$REL/daily/current
     
     if [ "$ARCH" = "x86_64" ]; then
         REL_ARCH=amd64
     fi
 
-    ROOTFS=ubuntu-base-$REL_VER-base-$REL_ARCH.tar.gz
-    #ROOTFS=$REL-base-$REL_ARCH.tar.gz
+    #ROOTFS=ubuntu-base-$REL_VER-base-$REL_ARCH.tar.gz
+    ROOTFS=$REL-base-$REL_ARCH.tar.gz
     URL_ROOTFS=$REL_URL/$ROOTFS
     ROOTFS_FILE=$DIR/$ROOTFS
     

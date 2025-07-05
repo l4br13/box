@@ -65,7 +65,7 @@ else
     else
         if [ -f $ROOT/etc/os-release ]; then
             . $ROOT/etc/os-release
-            printf "$(basename $0): ($ID) is ready.\n"
+            printf "$(basename $0): ($ID) is installed.\n"
         else
             printf "$(basename $0): is not installed.\n"
         fi
