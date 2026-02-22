@@ -46,6 +46,14 @@ INSTALL_UBUNTU () {
 	printf "ubuntu" > $ROOT/etc/hostname
 	echo "PS1='\W \\$ ' " >> $ROOT/root/.bashrc
 	echo 'cd $HOME' >> $ROOT/etc/bash.bashrc
+    EXEC "apt update" || {
+        printf "install error: failed to update package list.\n"
+        printf "try to update manually.\n"
+    }
+    EXEC "apt upgrade -y" || {
+        printf "install error: failed to upgrade packages.\n"
+        printf "try to upgrade manually.\n"
+    }
     printf "$(basename $0): Ubuntu installed.\n"
     return 1
 }

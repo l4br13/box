@@ -4,10 +4,15 @@ HELP () {
     printf "   or:	$PROGRAM [OPTION] [ARGUMENT]\n"
     printf "\n"
     printf "Options:\n"
+    printf "	-c, --command [command]  execute a command in rootfs.\n"
     printf "	-i, --install [distro]		install a rootfs.\n"
     printf "	-l, --login [distro] 		login to rootfs.\n"
     printf "	-v, --version			show version info.\n"
     printf "	-h, --help			show help information.\n"
+    printf "\n"
+    printf "Install: The default installation is alpine.\n"
+    printf "	$PROGRAM -i, --install alpine    install alpine.\n"
+    printf "	$PROGRAM -i,--install ubuntu    install ubuntu.\n"
     printf "\n"
     return 1
 }

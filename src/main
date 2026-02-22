@@ -1,18 +1,19 @@
 if [ ! -z $1 ]; then
     case $1 in
+        -c|--command)
+            EXEC=1
+            COMMAND=$@
+            COMMAND=${COMMAND#-c }
+        ;;
         -*)
             unset $EXEC
             unset $COMMAND
-        ;;
-        *)
-            EXEC=1
-            COMMAND=$@
         ;;
     esac
 fi
 
 if [ -z $EXEC ]; then
-    OPT=$(getopt -n $PROGRAM -o 'hvil' -l help,version,install,login -- "$@")
+    OPT=$(getopt -n $PROGRAM -o 'hviul' -l help,version,install,uninstall,login -- "$@")
     if [ $? -ne 0 ]; then
         printf "Try '$PROGRAM --help' for more information.\n"
         exit
@@ -33,6 +34,9 @@ if [ -z $EXEC ]; then
                 ;;
                 -i|--install)
                     _INSTALL=1
+                ;;
+                -u|--uninstall)
+                    _UNINSTALL=1
                 ;;
                 -l|--login)
                     _LOGIN=1
@@ -56,22 +60,23 @@ if [ ! -z $EXEC ]; then
 else
     if [ ! -z $_HELP ]; then
         HELP
-        elif [ ! -z $_VERSION ]; then
+    elif [ ! -z $_VERSION ]; then
         VERSION
-        elif [ ! -z $_INSTALL ]; then
+    elif [ ! -z $_INSTALL ]; then
         INSTALL $PARAM
-        elif [ ! -z $_LOGIN ]; then
+    elif [ ! -z $_UNINSTALL ]; then
+        UNINSTALL $PARAM
+    elif [ ! -z $_LOGIN ]; then
         LOGIN
     else
         if [ -f $ROOT/etc/os-release ]; then
             . $ROOT/etc/os-release
-            printf "$(basename $0): ($ID) is installed.\n"
+            LOGIN
         else
             printf "$(basename $0): is not installed.\n"
+            printf "Try '$(basename $0) --help' for more information.\n"
         fi
-        
-        printf "Try '$(basename $0) --help' for more information.\n"
-        
+                
         exit 1
     fi
 fi

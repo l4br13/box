@@ -4,6 +4,7 @@ LOGIN () {
         printf "Try '$(basename $0) --install' to install.\n"
         exit 1
     fi
+    printf "\e[31mWarning: This is direct login to rootfs, do with caution.\e[0m\n"
     if [ -f $ROOT/etc/os-release ]; then
         . $ROOT/etc/os-release
         if [ "$ID" = "alpine" ]; then

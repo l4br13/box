@@ -1,0 +1,22 @@
+UNINSTALL () {
+    if [ -f $ROOT/etc/os-release ]; then
+        . $ROOT/etc/os-release
+        
+        printf "$(basename $0): $NAME are installed.\n"
+        
+        read -p "Are you sure want to uninstall (Y/n) : " CONFIRM
+        
+        if [ "$CONFIRM" = "" ]; then CONFIRM="y"; fi
+        if [ "$CONFIRM" = "Y" ]; then CONFIRM="y"; fi
+        if [ "$CONFIRM" != "y" ]; then
+            printf "install aborted.\n"
+            exit 1
+		else
+			printf "Uninstalling $NAME...\n"
+			rm -rf $ROOT
+			printf "$PROGRAM: $NAME uninstalled.\n"
+        fi
+    fi
+    
+    return 1
+}
